@@ -3,7 +3,7 @@ import argparse
 from scapy.all import *
 
 
-# La idea es sniffear con Wireshark y una vez que tengamos todos los paquetes que queremos
+# Creo que lo mas facil es sniffear con Wireshark y una vez que tengamos todos los paquetes que queremos
 # guardamos esa info en un archivo .pcap (packet capture) y lo laburamos con este script
 
 
@@ -28,14 +28,10 @@ if __name__ == '__main__':
 	packets_total = len(sniffed_packets)
 
 	for packet in sniffed_packets:
-	    if(Ether in packet and 
-	    	packet[Ether].dst == BROADCAST_PHYSICAL_ADDRESS):
+		if(Ether in packet and 
+			packet[Ether].dst == BROADCAST_PHYSICAL_ADDRESS):
 			packets_broadcast += 1
 
-
-    # Limpio la pantalla
-    os.system('clear')
-
-    print("Paquetes de broadcast: ", packets_broadcast)
-    print("Paquetes totales: ", packets_total)
-    print("Proporcion broadcast/totales: ", float(packets_broadcast)/float(packets_total))
+	print("Paquetes de broadcast: ", packets_broadcast)
+	print("Paquetes totales: ", packets_total)
+	print("Proporcion broadcast/totales: ", float(packets_broadcast)/float(packets_total))
