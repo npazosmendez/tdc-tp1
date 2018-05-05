@@ -32,8 +32,10 @@ if __name__ == '__main__':
 	broadcast_packets = 0
 
 	# defaultdic() es para que si le pido una key que no existe, la defina y ponga el valor por defecto (0 en este caso)
-	packets_dict = { 'broadcast': defaultdict(lambda: 0), 
-					 'unicast': defaultdict(lambda: 0) }
+	packets_dict = {
+                'broadcast': defaultdict(lambda: 0), 
+                'unicast': defaultdict(lambda: 0)
+                }
 
 	for packet in sniffed_packets:
 		key = ''
@@ -68,7 +70,7 @@ if __name__ == '__main__':
 
 			S1_entropy += tabla_resultado[(dest, prot)]['prob'] * tabla_resultado[(dest, prot)]['info']
 
-	print('\n',tabla_resultado)
+	print(tabla_resultado)
  
 
  	# Sistemita pedorro para guardar los csv, nada fancy
