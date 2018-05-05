@@ -4,6 +4,12 @@ from collections import defaultdict
 from math import log
 from scapy.all import *
 
+def preetyPrintResultsTable(results):
+    for (destiny, protocol) in results.keys():
+        key = (destiny, protocol)
+        print("%s - %s:\n\tINFO = %.5f\n\tPROB = %.5f\n" %
+                (destiny, protocol, results[key]["info"], results[key]["prob"]))
+
 
 # Creo que lo mas facil es sniffear con Wireshark y una vez que tengamos todos los paquetes que queremos
 # guardamos esa info en un archivo .pcap (packet capture) y lo laburamos con este script
@@ -52,9 +58,9 @@ if __name__ == '__main__':
 
 	print('Fuente S1 \n--------')
 
-	print('broadcast:', dict(packets_dict['broadcast']))
-	print('unicast:', dict(packets_dict['unicast']))
-
+	print("broadcast:", dict(packets_dict['broadcast']))
+	print("unicast:", dict(packets_dict['unicast']))
+        print("") # Just for new line
 
 	# Armo la tabla y calculo la entropia
 
@@ -70,8 +76,7 @@ if __name__ == '__main__':
 
 			S1_entropy += tabla_resultado[(dest, prot)]['prob'] * tabla_resultado[(dest, prot)]['info']
 
-	print(tabla_resultado)
- 
+        preetyPrintResultsTable(tabla_resultado)
 
  	# Sistemita pedorro para guardar los csv, nada fancy
 	if args.output_files_prefix != None:
