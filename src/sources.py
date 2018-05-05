@@ -114,7 +114,11 @@ def entropy(source):
     infos = informacion_por_simbolo(source)
     probas = proba_por_simbolo(source)
     # Esto funciona porque los símbolos en infos y probas están en el mismo orden
-    return sum(np.array(infos.values())*np.array(probas.values()))
+    info_vals = np.fromiter(infos.values(), dtype=np.float) 
+    probs_vals = np.fromiter(probas.values(), dtype=np.float) 
+    if info_vals.size != probs_vals.size:
+        raise NameError("info_vals and probs_vals nor same length: %d - %d" % (len(info_vals), len(probs_vals)))
+    return sum(info_vals*probs_vals)
 
 def max_entropy(source):
     "Devuelve la máxima entropía que podría alcanzar 'source' (float)"
