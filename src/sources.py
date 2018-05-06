@@ -132,6 +132,19 @@ def save_source(source, path):
 def load_source(path):
     with open(path, 'rb') as f:
         return pickle.load(f)
+    
+# -------------------------------------------------------------------------- #
+
+# ARP message mapping
+def getArpHeatmapDataframe(sniffedPackets):
+    d = dict()
+    for p in sniffedPackets[ARP]:
+        if p.psrc not in d.keys():
+            d[p.psrc] = dict()
+        if p.pdst not in d[p.psrc].keys():
+            d[p.psrc][p.pdst] = 0
+        d[p.psrc][p.pdst] = d[p.psrc][p.pdst] + 1
+    return d
 
 # -------------------------------------------------------------------------- #
 
@@ -154,8 +167,10 @@ if __name__ == '__main__':
 	S1 = create_S1_source(sniffed_packets)
 	S2_attrs = ['op','psrc'] # podría ser argumento del script, pero quilombo
 	S2 = create_ARP_source(sniffed_packets, S2_attrs)
-
+	heatmapDataFrame = getArpHeatmapDataframe(sniffed_packets)    
+        
 	# Guardo las fuentes
 	if args.output_files_prefix != None:
 		save_source(S1, args.output_files_prefix + '_S1.pkl')
 		save_source(S2, args.output_files_prefix + '_S2.pkl')
+		save_source(heatmapDataFrame, args.output_files_prefix + '_hmap.pkl')
