@@ -62,7 +62,7 @@ def format_symbol(symbol, attrs):
     for i in range(len(attrs)):
         att = attrs[i]
         if att == 'op':
-            formatted_symbol += 'is-at' if att == ARP.is_at else 'who-has'
+            formatted_symbol += 'is-at' if symbol[i] == ARP.is_at else 'who-has'
         elif att == 'psrc':
             formatted_symbol += 'src: ' + str(symbol[i])
         elif att == 'pdst':
